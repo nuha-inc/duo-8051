@@ -1,0 +1,34 @@
+﻿加载固件方法：
+
+一、在8051-SRAM中加载固件
+        1.将8051_up、mars_mcu_fw.bin、blink.sh拷入/mnt/data，并赋予执行和读取权限
+        2.执行8051_up自动更新固件并启动8051核
+        3.执行blink.sh，该脚本会向8051核心发送信息，使蓝色LED闪烁（在执行该脚本前请确认/mnt/system/blink.sh已经被移除）
+        注：该种方法运行时8051内核固件不能超过8KB，超过可能造成不运行
+
+二、在DDR内存中加载固件
+        1.更改SDK中内存分配，修改build/boards/cv180x/[board config]/memmap.py
+          在MemoryMap中添加以下内容
+        # ==============
+        # 8051
+        # ==============
+        CHIP8051_SIZE = 512 * SIZE_1K
+        CHIP8051_ADDR = DRAM_BASE + DRAM_SIZE - CHIP8051_SIZE
+
+          修改以下内容
+        # ==============
+        # C906L FreeRTOS
+        # ==============
+        FREERTOS_SIZE = 768 * SIZE_1K
+        # FreeRTOS is after 8051
+        FREERTOS_ADDR = CHIP8051_ADDR - FREERTOS_SIZE
+        FSBL_C906L_START_ADDR = FREERTOS_ADDR
+
+        2.重新编译固件并烧录到开发板
+        3.将8051_up、mars_mcu_fw.bin、blink.sh、8051_boot_cfg.ini拷入/mnt/data，并赋予执行和读取权限
+        4.执行8051_up自动更新固件并启动8051核
+        5.执行blink.sh，该脚本会向8051核心发送信息，使蓝色LED闪烁（在执行该脚本前请确认/mnt/system/blink.sh已经被移除）
+        注：若想自定义8051存放固件的DDR内存大小，请修改"CHIP8051_SIZE = 512 * SIZE_1K"中512为自定义大小
+            并修改8051_boot_cfg.ini中地址为自定义地址，地址计算公式为"2147483648+64*1048576-[自定义大小]*1024"
+
+        
