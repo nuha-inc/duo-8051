@@ -2,7 +2,7 @@
 #include "cvi_gpio.h"
 
 #define BUTTON_GPIO_BASE GPIO0_BASE
-#define BUTTON_GPIO_PIN 11
+#define BUTTON_GPIO_PIN 29
 
 // using pin B11 as LED output, using B9 for ground
 
