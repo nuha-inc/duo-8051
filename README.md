@@ -4,7 +4,7 @@
 
 ## Firmware compilation
 Go to `sdcc/mars/project/base_project` and run `make`.
-Copy `mars_mcu_fw.bin` from output/ as well as `8051_up` and `8051_boot_cfg.ini` (from `firmware/`) into `/mnt/data` on the milkv.
+Copy `mars_mcu_fw.bin` from `output/` as well as `8051_up` and `8051_boot_cfg.ini` (from `firmware/`) into `/mnt/data` on the milkv.
 Run `sudo ./8051_up` to flash the firmware.
 
 ## Notes
